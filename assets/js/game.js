@@ -10,8 +10,15 @@ var playerAttack = 10;
 var playerMoney = 10;
 
 var enemyNames = ["Roborto", "Amy Andriod", "Robo Trumble"];
-var enemyHeath = 50;
+var enemyHealth = 50;
 var enemyAttack = 12;
+
+// funtion to generate a random numeric value 
+var randomNumber = function(min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return value
+}
 
 // create fuction
 var fight = function(enemyName) {
@@ -35,7 +42,7 @@ var fight = function(enemyName) {
       }
   
       // remove enemy's health by subtracting the amount set in the playerAttack variable
-      enemyHealth = enemyHealth - playerAttack;
+      enemyHealth = randomNumber();
       console.log(
         playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
       );
@@ -54,7 +61,7 @@ var fight = function(enemyName) {
       }
   
       // remove players's health by subtracting the amount set in the enemyAttack variable
-      playerHealth = playerHealth - enemyAttack;
+      playerHealth = Math.max(0, playerHealth - enemyAttack)
       console.log(
         enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
       );
@@ -85,7 +92,7 @@ var startGame = function() {
             var pickedEnemyName = enemyNames[i];
 
             // reset enemyHealth before starting new fight
-            enemyHeath = 50;
+            enemyHealth = Math.floor(Math.random() * 21) + 40;
 
             // use debugger to pause script from running and check whats going on at that moment in the code
             // debugger;
