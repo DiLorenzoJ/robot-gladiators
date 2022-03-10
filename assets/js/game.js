@@ -152,73 +152,69 @@ var startGame = function() {
   // reset player stats
   playerInfo.reset();
 
-    for(var i = 0; i < enemyInfo.length; i++) {
-        if (playerInfo.health > 0) {
-            // let the player know what round the are in, remember that arrays start at 0 so it needs to have 1 added to it
-            window.alert("Welcome to Robot Gladiators! Round " + (i + 1) );
+  for(var i = 0; i < enemyInfo.length; i++) {
+    if (playerInfo.health > 0) {
+      // let the player know what round the are in, remember that arrays start at 0 so it needs to have 1 added to it
+      window.alert("Welcome to Robot Gladiators! Round " + (i + 1) );
             
-            // pick new enemy to fight based on the index of the enemyNames array
-            var pickedEnemyObj = enemyInfo[i];
+      // pick new enemy to fight based on the index of the enemyNames array
+      var pickedEnemyObj = enemyInfo[i];
 
-            // reset enemy.Health before starting new fight
-            pickedEnemyObj.health = randomNumber(40, 60);
+      // reset enemy.Health before starting new fight
+      pickedEnemyObj.health = randomNumber(40, 60);
 
-            // use debugger to pause script from running and check whats going on at that moment in the code
-            // debugger;
+      // use debugger to pause script from running and check whats going on at that moment in the code
+      // debugger;
 
-            // pass the pickedEnemyName variables value intob the fight function, where it will assume the value of the enemyName parameter
-            fight(pickedEnemyObj);
+      // pass the pickedEnemyName variables value intob the fight function, where it will assume the value of the enemyName parameter
+      fight(pickedEnemyObj);
 
-            // if player is still alive and we're not at the last enemy in the array
-            if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
-              // ask if player wants to use the store before next round
-              var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
+      // if player is still alive and we're not at the last enemy in the array
+      if (playerInfo.health > 0 && i < enemyInfo.length - 1) {
+        // ask if player wants to use the store before next round
+        var storeConfirm = window.confirm("The fight is over, visit the store before the next round?");
 
-              // if yes, take them to the store() function 
-              if (storeConfirm) {
-                shop()
-              }
-            }
+        // if yes, take them to the store() function 
+        if (storeConfirm) {
+          shop()
         }
-        else {
-            window.alert("You have lost your robot in battle! Game Over!!");
-            break;
-        }
+      }  
+    }
+    else {
+      window.alert("You have lost your robot in battle! Game Over!!");
+      break;
+    }
+  // after the loop ends, player is either out of health or enemeies to fight, so run the endGame function
+  endGame();
+};
 
-        // after the loop ends, player is either out of health or enemeies to fight, so run the endGame function
-        endGame();
-    };
+var shop = function() {
+  // ask the player what they'd like to do
+  var shopOptionPrompt = window.prompt(
+    "Would you like to REFILL your health or UPGRADE your attack for 7 tokens or Leave the store? Please enter one: '1' for REFILL, '2' for UPGRADE, or '3' for LEAVE to make a choice."
+  )
 
-    var shop = function() {
-      // ask the player what they'd like to do
-      var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health or UPGRADE your attack for 7 tokens or Leave the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
-      )
+  shopOptionPrompt = parseInt(shopOptionPrompt);
 
-      // use switch to carry out action
-      switch (shopOptionPrompt) {
-        case "refill": // new case
-        case "REFILL":
-          playerInfo.refillHealth();
-          break;
-        case "upgrade": // new case
-        case "UPGRADE":
-          playerInfo.upgradeAttack();
-          break;
-        case "leave": // new case
-        case "LEAVE":
-          window.alert("Leaving the store.");
-
-          // do nothing, so the function will end
-          break;
-        default:
-          window.alert("You did not pick a valid option. Try Again.");
-
-          // call shop() again to force player to pick a valid option
-          shop();
-          break;
-      }
-    };
+  // use switch to carry out action
+  switch (shopOptionPrompt) {
+    case 1:
+      playerInfo.refillHealth();
+      break;
+    case 2:
+      playerInfo.upgradeAttack();
+      break;
+    case 3:
+      window.alert("Leaving the store.");
+      // do nothing, so the function will end
+      break;
+    default:
+      window.alert("You did not pick a valid option. Try Again.");
+      // call shop() again to force player to pick a valid option
+      shop();
+      break;
+  }
+};
 
     // play again
     startGame();
