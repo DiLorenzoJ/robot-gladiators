@@ -256,22 +256,31 @@ startGame();
 
 // function to end the entire game
 var endGame = function() {
-    // if the player is still alive, player wins!
-    if (playerInfo.health > 0) {
-        window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money + ".");
-    }
-    else {
-        window.alert("You've lost your robot in battle.");
-    }
+  window.alert("The game has now ended. Let's see how you did!");
+  
+  //check localStorage for high score, if it's not there, use 0
+  var highScore = localStorage.getItem("highScore");
+  if (highScore === null) {
+    highScore = 0;
+  }
+  // if player has more money than the high score, player has a new high score!
+  if (playerInfo.money > highScore) {
+    localStorage.setItem("highscore", playerInfo.money);
+    localStorage.setItem("name", playerInfo.name)
 
-    // ask player if they'd like to play again
-    var playAgainConfirm = window.confirm("Would you like to play again?");
-
-    if (playAgainConfirm) {
-        // restart the game
-        startGame();
-    }
-    else {
-      window.alert(" Thank you for playing Robot Gladiators! Come Back Soon!");
-    }
+    alert(playerInfo.name + " now has the high score of  " + playerInfo.money + "! ");
+  }
+  else{
+    alert(playerInfo.name + " did not beat the highscore of " + highScore + ". Maybe next time!")
+  }
+  // ask player if they'd like to play again
+  var playAgainConfirm = window.confirm("Would you like to play again?");
+  
+  if (playAgainConfirm) {
+    // restart the game
+    startGame();
+  }
+  else {
+    window.alert(" Thank you for playing Robot Gladiators! Come Back Soon!");
+  }
 };
